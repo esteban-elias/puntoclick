@@ -12,16 +12,20 @@
         <li>Categorías
           <ul>
           {% for padre in categorias_padre %}
-              <li>
-                  {{ padre.nombre }}
-                  {% if padre.categoria_set.all %}
-                      <ul>
-                      {% for hijo in padre.categoria_set.all %}
-                          <li><a href="#">{{ hijo.nombre }}</a></li>
-                      {% endfor %}
-                      </ul>
-                  {% endif %}
-              </li>
+            <li>
+            {{ padre.nombre }}
+            {% if padre.categoria_set.all %}
+              <ul>
+              {% for hijo in padre.categoria_set.all %}
+                <li>
+                  <a href="{% url 'categoria' hijo.id %}">
+                    {{ hijo.nombre }}
+                  </a>
+                </li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+            </li>
           {% endfor %}
           </ul>
       </li>
