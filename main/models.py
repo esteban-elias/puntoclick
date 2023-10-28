@@ -105,7 +105,7 @@ class CarritoCompras(models.Model):
     usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Carrito para {self.usuario.nombre_usuario}"
+        return f"Carrito para {self.usuario}"
 
 
 class ItemCarrito(models.Model):
@@ -121,7 +121,7 @@ class ListaDeseos(models.Model):
     usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Lista de deseos para {self.usuario.nombre_usuario}"
+        return f"Lista de deseos para {self.usuario}"
 
 
 class ItemListaDeseos(models.Model):
