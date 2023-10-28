@@ -9,7 +9,9 @@
     <ul>
     {% for producto in productos %}
       <li>
-        <a href="#">{{ producto.titulo }}</a>
+        <a href="{% url 'producto' producto.id %}">
+          {{ producto.titulo }}
+        </a>
       </li>
       {% endfor %}
     </ul>
