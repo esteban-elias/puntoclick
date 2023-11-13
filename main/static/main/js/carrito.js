@@ -8,11 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const url = form.action;
 
     btnIncrementar.addEventListener('click', function () {
-      const formData = new FormData(form);
-      formData.append('action', 'incrementar');
-
       axios
-        .post(url, formData)
+        .post(url)
         .then((response) => {
           console.log(response);
           if (response.data.status === 'success') {
@@ -34,11 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const url = form.action;
 
     btnDecrementar.addEventListener('click', function () {
-      const formData = new FormData(form);
-      formData.append('action', 'decrementar');
-
       axios
-        .post(url, formData)
+        .post(url)
         .then((response) => {
           console.log(response);
           if (response.data.status === 'success') {
@@ -60,11 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const url = form.action;
 
     btnEliminar.addEventListener('click', function () {
-      const formData = new FormData(form);
-      formData.append('action', 'eliminar');
-
       axios
-        .post(url, formData)
+        .post(url)
         .then((response) => {
           console.log(response);
           if (response.data.status === 'success') {

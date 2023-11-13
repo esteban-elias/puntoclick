@@ -57,31 +57,38 @@ def agregar_al_carrito(request, id_producto):
 
 
 @require_POST
-def actualizar_carrito(request, id_item):
+def incrementar_item_carrito(request, id_item):
     item = ItemCarrito.objects.get(pk=id_item)
-    if request.POST['action'] == 'incrementar':
-        item.cantidad += 1
-        item.save()
-        return JsonResponse({
-            'status': 'success',
-            'message': 'Cantidad incrementada',
-            'item' : item.to_dict() 
-        })
-    elif request.POST['action'] == 'decrementar':
-        if item.cantidad == 1:
-            return HttpResponseBadRequest('No se puede decrementar')
-        item.cantidad -= 1
-        item.save()
-        return JsonResponse({
-            'status': 'success',
-            'message': 'Cantidad decrementada',
-            'item' : item.to_dict()
-        })
-    elif request.POST['action'] == 'eliminar':
-        item_copy = item.to_dict()
-        item.delete()
-        return JsonResponse({
-            'status': 'success',
-            'message': 'Item eliminado',
-            'item': item_copy
-        })
+    item.cantidad += 1
+    item.save()
+    return JsonResponse({
+        'status': 'success',
+        'message': 'Cantidad incrementada',
+        'item' : item.to_dict() 
+    })
+
+
+@require_POST
+def decrementar_item_carrito(request, id_item):
+    item = ItemCarrito.objects.get(pk=id_item)
+    if item.cantidad == 1:
+        return HttpResponseBadRequest('No se puede decrementar')
+    item.cantidad -= 1
+    item.save()
+    return JsonResponse({
+        'status': 'success',
+        'message': 'Cantidad decrementada',
+        'item' : item.to_dict()
+    })
+
+
+@require_POST
+def eliminar_item_carrito(request, id_item):
+    item = ItemCarrito.objects.get(pk=id_item)
+    item_copy = item.to_dict()
+    item.delete()
+    return JsonResponse({
+        'status': 'success',
+        'message': 'Item eliminado',
+        'item': item_copy
+    })

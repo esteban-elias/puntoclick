@@ -2,13 +2,21 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-  path('', views.index, name='index'),
-  path('categorias/<int:id_categoria>', views.categoria, name='categoria'),
-  path('producto/<int:id_producto>', views.producto, name='producto'),
-  path('carrito', views.carrito, name='carrito'),
+    path('', views.index, name='index'),
+    path('categorias/<int:id_categoria>', views.categoria, name='categoria'),
+    path('producto/<int:id_producto>', views.producto, name='producto'),
+    path('carrito', views.carrito, name='carrito'),
 
-  path('agregar-al-carrito/<int:id_producto>', views.agregar_al_carrito, 
-       name='agregar_al_carrito'),
-  path('actualizar-carrito/<int:id_item>', views.actualizar_carrito,
-       name='actualizar_carrito'),
+    path('agregar-al-carrito/<int:id_producto>', views.agregar_al_carrito,
+         name='agregar_al_carrito'),
+    path('incrementar-item-carrito/<int:id_item>',
+         views.incrementar_item_carrito,
+         name='incrementar_item_carrito'),
+    path('decrementar-item-carrito/<int:id_item>',
+         views.decrementar_item_carrito,
+         name='decrementar_item_carrito'),
+    path('eliminar-item-carrito/<int:id_item>',
+         views.eliminar_item_carrito,
+         name='eliminar_item_carrito'),
+
 ]

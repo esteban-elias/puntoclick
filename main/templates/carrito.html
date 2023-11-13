@@ -29,10 +29,16 @@
           <td>{{ item.producto.precio }}</td>
           <td id="total-{{item.id}}">{{ item.precio_total }}</td>
           <td>
-            <form action="{% url 'actualizar_carrito' item.id %}">
+            <form action="{% url 'incrementar_item_carrito' item.id %}">
               {% csrf_token %}
               <button type="button" class="btn-incrementar">+</button>
+            </form>
+            <form action="{% url 'decrementar_item_carrito' item.id %}">
+              {% csrf_token %}
               <button type="button" class="btn-decrementar">-</button>
+            </form>
+            <form action="{% url 'eliminar_item_carrito' item.id %}">
+              {% csrf_token %}
               <button type="button" class="btn-eliminar">Eliminar</button>
             </form>
           </td>
