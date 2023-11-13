@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Crear cuenta{% endblock %}
+
+{% block content %}
+    <h1>Crear cuenta</h1>
+    <section>
+        <form action="{% url 'crear_cuenta' %}">
+            {% csrf_token %}
+            <label>Nombre de usuario
+                <input type="text" name="nombre-usuario" required>
+            </label>
+            <label>Nombre
+                <input type="text" name="nombre" required>
+            </label>
+            <label>Apellido
+                <input type="text" name="apellido" required>
+            </label>
+            <label>Email
+                <input type="email" name="email" required>
+            </label>
+            <label>Contraseña
+                <input type="password" name="contrasena" id="contrasena" required>
+            </label>
+            <label>Confirmar contraseña
+                <input 
+                    type="password"
+                    name="confirmar-contrasena"
+                    id="confirmar-contrasena"
+                    required>
+            </label>
+            <button type="button" id="btn-crear-cuenta">
+                Crear cuenta
+            </button>
+        </form>
+        <div id="error"></div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'main/js/crear_cuenta.js' %}"></script>
+{% endblock %}

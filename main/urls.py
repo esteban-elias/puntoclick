@@ -18,5 +18,8 @@ urlpatterns = [
     path('eliminar-item-carrito/<int:id_item>',
          views.eliminar_item_carrito,
          name='eliminar_item_carrito'),
-
+    path('iniciar-sesion', views.iniciar_sesion, name='iniciar_sesion'),
+    path('cerrar-sesion', views.cerrar_sesion, name='cerrar_sesion'),
+    path('cuenta', views.cuenta, name='cuenta'),
+    path('crear-cuenta', views.crear_cuenta, name='crear_cuenta'),
 ]

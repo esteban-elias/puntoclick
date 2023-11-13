@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block content %}
+    <h1>Iniciar sesión</h1>
+    <section>
+        <form action="{% url 'iniciar_sesion' %}">
+            {% csrf_token %}
+            <label>Usuario
+                <input type="text" name="nombre-usuario" required>
+            </label>
+            <label>Contraseña
+                <input type="password" name="contrasena" required>
+            </label>
+            <button type="button" id="btn-iniciar-sesion">
+                Iniciar sesión
+            </button>
+        </form>
+        <div id="error"></div>
+        <a href="{% url 'crear_cuenta' %}">Crear cuenta</a>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'main/js/iniciar_sesion.js' %}"></script>
+{% endblock %}

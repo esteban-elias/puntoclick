@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Mi cuenta{% endblock %}
+
+{% block content %}
+    <h1>Mi cuenta</h1>
+    <section>
+        <h2>Detalles</h2>
+        <li>Nombre de usuario: {{ usuario.username }}</li>
+        <li>Nombre: {{ usuario.first_name }}</li>
+        <li>Apellido: {{ usuario.last_name }}</li>
+        <li>Email: {{ usuario.email }}</li>
+    </section>
+{% endblock %}

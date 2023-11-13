@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.urls import reverse
 from django.views.decorators.http import require_POST
-from .models import Categoria, Producto, CarritoCompras, ItemCarrito
+from django.contrib.auth import authenticate, login, logout
+from .models import Categoria, Producto, CarritoCompras, ItemCarrito, Usuario
 
 
 
@@ -92,3 +93,64 @@ def eliminar_item_carrito(request, id_item):
         'message': 'Item eliminado',
         'item': item_copy
     })
+
+
+def iniciar_sesion(request):
+    if request.method == 'POST':
+        nombre_usuario = request.POST['nombre-usuario']
+        contrasena = request.POST['contrasena']
+        usuario = authenticate(request, username=nombre_usuario, password=contrasena)
+        if usuario is not None:
+            login(request, usuario)
+            return JsonResponse({
+                'status': 'success',
+                'message': 'Usuario autenticado'
+            })
+
+        else:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Usuario o contraseña incorrectos'
+            })
+    return render(request, 'iniciar_sesion.html')
+
+
+def cerrar_sesion(request):
+    logout(request)
+    return redirect('index')
+
+
+def cuenta(request):
+    usuario = request.user
+    context = {
+        'usuario': usuario
+    }
+    return render(request, 'cuenta.html', context)
+
+
+def crear_cuenta(request):
+    if request.method == 'POST':
+        nombre_usuario = request.POST['nombre-usuario']
+        nombre = request.POST['nombre']
+        apellido = request.POST['apellido']
+        email = request.POST['email']
+        contrasena = request.POST['contrasena']
+        usuario = Usuario.objects.create_user(
+            username=nombre_usuario,
+            first_name=nombre,
+            last_name=apellido,
+            email=email,
+            password=contrasena
+        )
+        if usuario is not None:
+            login(request, usuario)
+            return JsonResponse({
+                'status': 'success',
+                'message': 'Usuario creado'
+            })
+        else:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'No se pudo crear el usuario'
+            })
+    return render(request, 'crear_cuenta.html')

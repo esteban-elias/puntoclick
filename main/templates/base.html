@@ -35,7 +35,14 @@
             <button type="submit">Buscar</button>
           </form>
         </li>
-        <li><a href="#">Cuenta</a></li>
+        <li>
+        {% if user.is_authenticated %}
+          <a href="{% url 'cuenta' %}">{{ user.username }}</a> /
+          <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+        {% else %}
+          <a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
+        {% endif %}
+        </li>
         <li><a href="{% url 'carrito' %}">Carrito</a></li>
       </ul>
     </nav>
