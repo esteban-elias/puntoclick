@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.forms.models import model_to_dict
 
 class Usuario(AbstractUser):
     pass
@@ -114,7 +114,16 @@ class ItemCarrito(models.Model):
     cantidad = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"ItemCarrito para {self.producto.titulo}"
+        return f"ItemCarrito para {self.carrito} - {self.producto.titulo}"
+
+    @property
+    def precio_total(self):
+        return self.producto.precio * self.cantidad
+
+    def to_dict(self):
+        model_dict = model_to_dict(self)
+        model_dict['precio_total'] = self.precio_total
+        return model_dict
 
 
 class ListaDeseos(models.Model):

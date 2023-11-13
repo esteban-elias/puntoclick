@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Carrito{% endblock %}
+
+{% block content %}
+  <h1>Carrito</h1>
+  <section>
+    <h2>Items</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Total</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items_carrito %}
+        <tr id="item-{{item.id}}">
+          <td>
+            <a href="{% url 'producto' item.producto.id %}">
+              {{ item.producto }}
+            </a>
+          </td>
+          <td id="cantidad-{{item.id}}">{{ item.cantidad }}</td>
+          <td>{{ item.producto.precio }}</td>
+          <td id="total-{{item.id}}">{{ item.precio_total }}</td>
+          <td>
+            <form action="{% url 'actualizar_carrito' item.id %}">
+              {% csrf_token %}
+              <button type="button" class="btn-incrementar">+</button>
+              <button type="button" class="btn-decrementar">-</button>
+              <button type="button" class="btn-eliminar">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section> 
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'main/js/carrito.js' %}"></script>
+{% endblock %}

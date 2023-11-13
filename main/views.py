@@ -1,5 +1,9 @@
-from django.shortcuts import render
-from .models import Categoria, Producto
+from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseBadRequest
+from django.urls import reverse
+from django.views.decorators.http import require_POST
+from .models import Categoria, Producto, CarritoCompras, ItemCarrito
+
 
 
 def index(request):
@@ -28,3 +32,56 @@ def producto(request, id_producto):
         'imagenes': imagenes
     }
     return render(request, 'producto.html', context)
+
+
+def carrito(request):
+    return render(request, 'carrito.html')
+
+
+@require_POST
+def agregar_al_carrito(request, id_producto):
+    producto = Producto.objects.get(pk=id_producto)
+    carrito, _ = CarritoCompras.objects.get_or_create(usuario=request.user)
+    item, creado = ItemCarrito.objects.get_or_create(
+        carrito=carrito,
+        producto=producto,
+        defaults={'cantidad': 1}
+    )
+    if not creado:
+        item.cantidad += 1
+        item.save()
+    return JsonResponse({
+        'status': 'success',
+        'message': 'Producto agregado al carrito'
+    })
+
+
+@require_POST
+def actualizar_carrito(request, id_item):
+    item = ItemCarrito.objects.get(pk=id_item)
+    if request.POST['action'] == 'incrementar':
+        item.cantidad += 1
+        item.save()
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Cantidad incrementada',
+            'item' : item.to_dict() 
+        })
+    elif request.POST['action'] == 'decrementar':
+        if item.cantidad == 1:
+            return HttpResponseBadRequest('No se puede decrementar')
+        item.cantidad -= 1
+        item.save()
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Cantidad decrementada',
+            'item' : item.to_dict()
+        })
+    elif request.POST['action'] == 'eliminar':
+        item_copy = item.to_dict()
+        item.delete()
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Item eliminado',
+            'item': item_copy
+        })

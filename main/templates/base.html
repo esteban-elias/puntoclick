@@ -36,7 +36,7 @@
           </form>
         </li>
         <li><a href="#">Cuenta</a></li>
-        <li><a href="#">Carrito</a></li>
+        <li><a href="{% url 'carrito' %}">Carrito</a></li>
       </ul>
     </nav>
   </header>
@@ -46,5 +46,12 @@
   <footer>
 
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.4/js.cookie.min.js" integrity="sha512-Nonc2AqL1+VEN+97F3n4YxucBOAL5BgqNwEVc2uUjdKOWAmzwj5ChdJQvN2KldAxkCxE4OenuJ/RL18bWxGGzA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    axios.defaults.headers.common['X-CSRFToken'] = Cookies.get('csrftoken');
+  </script>
+  {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ producto.titulo }}{% endblock %}
 
@@ -11,6 +12,21 @@
       <li>Precio: {{ producto.precio }}</li>
       <li>Vendedor: {{ producto.vendedor }}</li>
       <li>Stock: {{ producto.cantidad_stock }}</li>
+
+      {% if producto.id in ids_productos_carrito %}
+      <li>Producto añadido al carrito.</li>
+      {% else %}
+        <li>
+          <form action="{% url 'agregar_al_carrito' producto.id %}">
+            {% csrf_token %}
+            <button 
+              type="button"
+              id="btn-agregar-al-carrito">
+                Agregar al carrito
+            </button>
+          </form>
+        </li>
+      {% endif %}
       <li> 
       {% for imagen in imagenes %}
         <img src="{{ imagen.url_imagen }}" alt="{{ producto.titulo }}">
@@ -19,4 +35,7 @@
     </ul>
   </section>
 {% endblock %}
-```
+
+{% block scripts %}
+  <script src="{% static 'main/js/producto.js' %}"></script>
+{% endblock %}
