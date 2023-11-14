@@ -1,4 +1,4 @@
-from .models import Categoria, Producto
+from .models import Categoria
 
 
 def categorias(request):
