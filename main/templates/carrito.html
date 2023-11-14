@@ -19,25 +19,25 @@
       </thead>
       <tbody>
         {% for item in items_carrito %}
-        <tr id="item-{{item.producto.id}}">
+        <tr id="item-{{item.id_producto}}">
           <td>
-            <a href="{% url 'producto' item.producto.id %}">
-              {{ item.producto.titulo }}
+            <a href="{% url 'producto' item.id_producto %}">
+              {{ item.titulo }}
             </a>
           </td>
-          <td id="cantidad-{{item.producto.id}}">{{ item.cantidad }}</td>
-          <td>{{ item.producto.precio }}</td>
-          <td id="total-{{item.producto.id}}">{{ item.precio_total }}</td>
+          <td id="cantidad-{{item.id_producto}}">{{ item.cantidad }}</td>
+          <td>{{ item.precio }}</td>
+          <td id="total-{{item.id_producto}}">{{ item.precio_total }}</td>
           <td>
-            <form action="{% url 'incrementar_item_carrito' item.producto.id %}">
+            <form action="{% url 'incrementar_item_carrito' item.id_producto %}">
               {% csrf_token %}
               <button type="button" class="btn-incrementar">+</button>
             </form>
-            <form action="{% url 'decrementar_item_carrito' item.producto.id %}">
+            <form action="{% url 'decrementar_item_carrito' item.id_producto %}">
               {% csrf_token %}
               <button type="button" class="btn-decrementar">-</button>
             </form>
-            <form action="{% url 'eliminar_item_carrito' item.producto.id %}">
+            <form action="{% url 'eliminar_item_carrito' item.id_producto %}">
               {% csrf_token %}
               <button type="button" class="btn-eliminar">Eliminar</button>
             </form>

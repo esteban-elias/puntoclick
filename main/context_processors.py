@@ -10,14 +10,12 @@ def carrito(request):
     carrito = request.session.get('carrito', {})
     items = []
     for item in carrito.values():
-        producto = Producto.objects.get(pk=item['id_producto'])
         items.append({
-            'producto': producto,
-            'cantidad': item['cantidad'],
-            'precio_total': producto.precio * item['cantidad']
+            **item,
+            'precio_total': item['precio'] * item['cantidad']
         })
 
-    ids_productos = [item['producto'].id for item in items]
+    ids_productos = [item['id_producto'] for item in items]
     return {
         'items_carrito': items,
         'ids_productos_carrito': ids_productos,
