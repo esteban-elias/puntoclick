@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
-from .models import Categoria, Producto, CarritoCompras, ItemCarrito, Usuario
+from .models import Categoria, Producto, Usuario
 from copy import deepcopy
 
 
@@ -46,7 +46,7 @@ def agregar_al_carrito(request, id_producto):
     carrito[producto.id] = {
         'id_producto': producto.id,
         'titulo': producto.titulo,
-        'precio': str(producto.precio),
+        'precio': int(producto.precio),
         'cantidad': 1
     }
     request.session['carrito'] = carrito
