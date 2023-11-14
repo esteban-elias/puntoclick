@@ -17,6 +17,17 @@
           <th>Acciones</th>
         </tr>
       </thead>
+      <tfoot>
+        <tr>
+          <td colspan="3">Total a pagar</td>
+          <td id="total-carrito">{{ total_carrito }}</td>
+          <td>
+            <button type="submit">
+              <a href="{% url 'pagar' %}">Pagar</a>
+            </button>
+          </td>
+        </tr>
+      </tfoot>
       <tbody>
         {% for item in items_carrito %}
         <tr id="item-{{item.id_producto}}">

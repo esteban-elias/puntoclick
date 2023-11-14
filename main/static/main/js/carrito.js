@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById(
               `total-${item.id_producto}`
             ).innerHTML = item.cantidad * item.precio;
+            document.getElementById('total-carrito').innerHTML =
+              response.data.total_carrito;
           }
         })
         .catch((error) => {
@@ -45,6 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById(
               `total-${item.id_producto}`
             ).innerHTML = item.cantidad * item.precio;
+            document.getElementById('total-carrito').innerHTML =
+              response.data.total_carrito;
           }
         })
         .catch((error) => {
@@ -67,6 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document
               .getElementById(`item-${item.id_producto}`)
               .remove();
+            document.getElementById('total-carrito').innerHTML =
+              response.data.total_carrito;
           }
         })
         .catch((error) => {

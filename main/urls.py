@@ -22,4 +22,6 @@ urlpatterns = [
     path('cerrar-sesion', views.cerrar_sesion, name='cerrar_sesion'),
     path('cuenta', views.cuenta, name='cuenta'),
     path('crear-cuenta', views.crear_cuenta, name='crear_cuenta'),
+    path('pagar', views.pagar, name='pagar'),
+    path('boleta/<int:id_pago>', views.boleta, name='boleta'),
 ]

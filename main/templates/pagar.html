@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Pagar{% endblock %}
+
+{% block content %}
+  <h1>Pagar</h1> 
+  <section>
+    <h2>Dirección de envío</h2>
+      <form>
+        {% csrf_token %}
+        {{ direccion_form.as_div }}
+      </form>
+  </section>
+  <section>
+    <h2>Método de pago</h2>
+    <form>
+      {% csrf_token %}
+      {{ pago_form.as_div }}
+    </form>
+    <span>Monto: {{ total_carrito }}</span>
+  </section>
+  <button id="btn-pagar">Pagar</button>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'main/js/pagar.js' %}"></script>
+{% endblock %}

@@ -16,7 +16,9 @@ def carrito(request):
         })
 
     ids_productos = [item['id_producto'] for item in items]
+    total_carrito = sum([item['precio_total'] for item in items])
     return {
         'items_carrito': items,
         'ids_productos_carrito': ids_productos,
+        'total_carrito': total_carrito
     }
