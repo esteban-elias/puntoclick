@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
 from .models import Categoria, Producto, CarritoCompras, ItemCarrito, Usuario
-
+from copy import deepcopy
 
 
 def index(request):
@@ -41,16 +41,15 @@ def carrito(request):
 
 @require_POST
 def agregar_al_carrito(request, id_producto):
-    producto = Producto.objects.get(pk=id_producto)
-    carrito, _ = CarritoCompras.objects.get_or_create(usuario=request.user)
-    item, creado = ItemCarrito.objects.get_or_create(
-        carrito=carrito,
-        producto=producto,
-        defaults={'cantidad': 1}
-    )
-    if not creado:
-        item.cantidad += 1
-        item.save()
+    producto = get_object_or_404(Producto, pk=id_producto)
+    carrito = request.session.get('carrito', {})
+    carrito[producto.id] = {
+        'id_producto': producto.id,
+        'titulo': producto.titulo,
+        'precio': str(producto.precio),
+        'cantidad': 1
+    }
+    request.session['carrito'] = carrito
     return JsonResponse({
         'status': 'success',
         'message': 'Producto agregado al carrito'
@@ -58,36 +57,40 @@ def agregar_al_carrito(request, id_producto):
 
 
 @require_POST
-def incrementar_item_carrito(request, id_item):
-    item = ItemCarrito.objects.get(pk=id_item)
-    item.cantidad += 1
-    item.save()
+def incrementar_item_carrito(request, id_producto):
+    id_producto = str(id_producto)
+    carrito = request.session.get('carrito', {})
+    carrito[id_producto]['cantidad'] += 1
+    request.session['carrito'] = carrito
     return JsonResponse({
         'status': 'success',
         'message': 'Cantidad incrementada',
-        'item' : item.to_dict() 
+        'item': carrito[id_producto]
     })
 
 
 @require_POST
-def decrementar_item_carrito(request, id_item):
-    item = ItemCarrito.objects.get(pk=id_item)
-    if item.cantidad == 1:
+def decrementar_item_carrito(request, id_producto):
+    id_producto = str(id_producto)
+    carrito = request.session.get('carrito', {})
+    if carrito[id_producto]['cantidad'] == 1:
         return HttpResponseBadRequest('No se puede decrementar')
-    item.cantidad -= 1
-    item.save()
+    carrito[id_producto]['cantidad'] -= 1
+    request.session['carrito'] = carrito
     return JsonResponse({
         'status': 'success',
         'message': 'Cantidad decrementada',
-        'item' : item.to_dict()
+        'item': carrito[id_producto]
     })
 
 
 @require_POST
-def eliminar_item_carrito(request, id_item):
-    item = ItemCarrito.objects.get(pk=id_item)
-    item_copy = item.to_dict()
-    item.delete()
+def eliminar_item_carrito(request, id_producto):
+    id_producto = str(id_producto)
+    carrito = request.session.get('carrito', {})
+    item_copy = deepcopy(carrito[id_producto])
+    del carrito[id_producto]
+    request.session['carrito'] = carrito
     return JsonResponse({
         'status': 'success',
         'message': 'Item eliminado',
@@ -99,7 +102,8 @@ def iniciar_sesion(request):
     if request.method == 'POST':
         nombre_usuario = request.POST['nombre-usuario']
         contrasena = request.POST['contrasena']
-        usuario = authenticate(request, username=nombre_usuario, password=contrasena)
+        usuario = authenticate(
+            request, username=nombre_usuario, password=contrasena)
         if usuario is not None:
             login(request, usuario)
             return JsonResponse({

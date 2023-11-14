@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.forms.models import model_to_dict
 
 class Usuario(AbstractUser):
     pass
@@ -119,11 +118,6 @@ class ItemCarrito(models.Model):
     @property
     def precio_total(self):
         return self.producto.precio * self.cantidad
-
-    def to_dict(self):
-        model_dict = model_to_dict(self)
-        model_dict['precio_total'] = self.precio_total
-        return model_dict
 
 
 class ListaDeseos(models.Model):

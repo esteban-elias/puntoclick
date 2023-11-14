@@ -14,10 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log(response);
           if (response.data.status === 'success') {
             item = response.data.item;
-            document.getElementById(`cantidad-${item.id}`).innerHTML =
-              item.cantidad;
-            document.getElementById(`total-${item.id}`).innerHTML =
-              item.precio_total;
+            document.getElementById(
+              `cantidad-${item.id_producto}`
+            ).innerHTML = item.cantidad;
+            document.getElementById(
+              `total-${item.id_producto}`
+            ).innerHTML = item.cantidad * item.precio;
           }
         })
         .catch((error) => {
@@ -37,10 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log(response);
           if (response.data.status === 'success') {
             item = response.data.item;
-            document.getElementById(`cantidad-${item.id}`).innerHTML =
-              item.cantidad;
-            document.getElementById(`total-${item.id}`).innerHTML =
-              item.precio_total;
+            document.getElementById(
+              `cantidad-${item.id_producto}`
+            ).innerHTML = item.cantidad;
+            document.getElementById(
+              `total-${item.id_producto}`
+            ).innerHTML = item.cantidad * item.precio;
           }
         })
         .catch((error) => {
@@ -60,7 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log(response);
           if (response.data.status === 'success') {
             item = response.data.item;
-            document.getElementById(`item-${item.id}`).remove();
+            document
+              .getElementById(`item-${item.id_producto}`)
+              .remove();
           }
         })
         .catch((error) => {
