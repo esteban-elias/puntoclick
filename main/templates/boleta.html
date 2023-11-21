@@ -3,13 +3,15 @@
 {% block title %}Boleta{% endblock %}
 
 {% block content %}
-  <h1>Boleta</h1>
-  <section>
-    <h2>Detalles de la compra</h2>
-    <ul>
-      <li>Método de pago: {{ pago.metodo_pago }}</li>
-      <li>Fecha: {{ pago.fecha_pago }}</li>
-      <li>Monto: {{ pago.monto }}</li>
-    </ul>
-  </section>
+  <div class="d-flex flex-column min-vh-100">
+    <h1 class="mt-5">Boleta</h1>
+    <section>
+      <h2 class="my-4">Detalles de la compra</h2>
+      <ul class="list-group">
+        <li class="list-group-item">Método de pago: {{ pago.metodo_pago }}</li>
+        <li class="list-group-item">Fecha: {{ pago.fecha_pago }}</li>
+        <li class="list-group-item">Monto: {{ pago.monto }}</li>
+      </ul>
+    </section>
+  </div>
 {% endblock %}
