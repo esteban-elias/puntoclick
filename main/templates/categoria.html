@@ -1,19 +1,38 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ categoria.nombre }}{% endblock %}
 
 {% block content %}
-  <h1>{{ categoria.nombre }}</h1>
-  <section>
-    <h2>Productos</h2>
-    <ul>
-    {% for producto in productos %}
-      <li>
-        <a href="{% url 'producto' producto.id %}">
-          {{ producto.titulo }}
-        </a>
-      </li>
+  <div class="d-flex flex-column min-vh-100">
+    <div class="border my-5">
+    {% if categoria.nombre == "Almacenamiento" %}
+      <img class="w-100 rounded" src="{% static 'main/img/portada-almacenamiento.jpg' %}" alt="" srcset="">
+    {% elif categoria.nombre == "Consolas" %}
+      <img class="w-100 rounded" src="{% static 'main/img/portada-consolas.jpeg' %}" alt="" srcset="">
+    {% elif categoria.nombre == "Videojuegos" %}
+      <img class="w-100 rounded" src="{% static 'main/img/portada-videojuegos.jpg' %}" alt="" srcset="">
+    {% endif %}
+
+    </div>
+      <h1>{{ categoria.nombre }}</h1>
+      <h2 class="mt-3">Productos</h2>
+    <div>
+      {% for producto in productos %}
+        <div class="border rounded my-3 py-3 d-flex flex-column justify-content-center align-items-center">
+          <div>{{ producto.titulo }}</div>
+          <div>{{ producto.vendedor }}</div>
+          <div>{{ producto.precio }}</div>
+          {% for imagen in producto.imagenproducto_set.all %}
+          <div class="d-flex flex-column justify-content-center align-items-center">
+            <img class="w-50 my-3" src="{{ imagen.url_imagen }}" alt="{{ imagen.producto }}">
+          </div>
+          <div>
+            <a href="{% url 'producto' producto.id %}" class="btn btn-primary" role="button">Ver producto</a>
+          </div>
+          {% endfor %}
+        </div>
       {% endfor %}
-    </ul>
-  </section> 
+      </div>
+    </div>
 {% endblock %}
