@@ -4,60 +4,62 @@
 {% block title %}Carrito{% endblock %}
 
 {% block content %}
-  <h1>Carrito</h1>
-  <section>
-    <h2>Items</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Cantidad</th>
-          <th>Precio</th>
-          <th>Total</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tfoot>
-        <tr>
-          <td colspan="3">Total a pagar</td>
-          <td id="total-carrito">{{ total_carrito }}</td>
-          <td>
-            <button type="submit">
-              <a href="{% url 'pagar' %}">Pagar</a>
-            </button>
-          </td>
-        </tr>
-      </tfoot>
-      <tbody>
-        {% for item in items_carrito %}
-        <tr id="item-{{item.id_producto}}">
-          <td>
-            <a href="{% url 'producto' item.id_producto %}">
-              {{ item.titulo }}
-            </a>
-          </td>
-          <td id="cantidad-{{item.id_producto}}">{{ item.cantidad }}</td>
-          <td>{{ item.precio }}</td>
-          <td id="total-{{item.id_producto}}">{{ item.precio_total }}</td>
-          <td>
-            <form action="{% url 'incrementar_item_carrito' item.id_producto %}">
-              {% csrf_token %}
-              <button type="button" class="btn-incrementar">+</button>
-            </form>
-            <form action="{% url 'decrementar_item_carrito' item.id_producto %}">
-              {% csrf_token %}
-              <button type="button" class="btn-decrementar">-</button>
-            </form>
-            <form action="{% url 'eliminar_item_carrito' item.id_producto %}">
-              {% csrf_token %}
-              <button type="button" class="btn-eliminar">Eliminar</button>
-            </form>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </section> 
+  <div class="d-flex flex-column min-vh-100">
+    <h1 class="mt-5">Carrito</h1>
+    <section>
+      <h2 class="my-4">Items</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Total</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan="3">Total a pagar</td>
+            <td id="total-carrito">{{ total_carrito }}</td>
+            <td>
+              <button class="btn btn-success" type="submit">
+                <a href="{% url 'pagar' %}" style="color: inherit; text-decoration: none;">Pagar</a>
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          {% for item in items_carrito %}
+          <tr id="item-{{item.id_producto}}">
+            <td>
+              <a href="{% url 'producto' item.id_producto %}">
+                {{ item.titulo }}
+              </a>
+            </td>
+            <td id="cantidad-{{item.id_producto}}">{{ item.cantidad }}</td>
+            <td>{{ item.precio }}</td>
+            <td id="total-{{item.id_producto}}">{{ item.precio_total }}</td>
+            <td>
+              <form action="{% url 'incrementar_item_carrito' item.id_producto %}">
+                {% csrf_token %}
+                <button class="btn btn-primary btn-incrementar" type="button">+</button>
+              </form>
+              <form action="{% url 'decrementar_item_carrito' item.id_producto %}">
+                {% csrf_token %}
+                <button class="btn btn-secondary btn-decrementar" type="button">-</button>
+              </form>
+              <form action="{% url 'eliminar_item_carrito' item.id_producto %}">
+                {% csrf_token %}
+                <button class="btn btn-danger btn-eliminar" type="button">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </div>
 {% endblock %}
 
 {% block scripts %}
