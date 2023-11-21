@@ -10,8 +10,10 @@ from .forms import DireccionForm, PagoForm
 
 def index(request):
     categorias = Categoria.objects.all()
+    productos = Producto.objects.all()
     context = {
-        'categorias': categorias
+        'categorias': categorias,
+        'productos': productos
     }
     return render(request, 'index.html', context)
 
