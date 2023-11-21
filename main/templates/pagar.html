@@ -4,23 +4,42 @@
 {% block title %}Pagar{% endblock %}
 
 {% block content %}
-  <h1>Pagar</h1> 
-  <section>
-    <h2>Dirección de envío</h2>
-      <form>
+  <style>
+    form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  form label {
+    margin-bottom: 5px;
+  }
+
+  form input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+</style>
+  <div class="d-flex flex-column min-vh-100">
+    <h1 class="mt-5">Pagar</h1>
+    <section>
+      <h2 class="mt-4 mb-3">Dirección de envío</h2>
+        <form>
+          {% csrf_token %}
+          {{ direccion_form.as_div }}
+        </form>
+    </section>
+    <section>
+      <h2 class="mt-4 mb-3">Método de pago</h2>
+      <form class="mb-4">
         {% csrf_token %}
-        {{ direccion_form.as_div }}
+        {{ pago_form.as_div }}
       </form>
-  </section>
-  <section>
-    <h2>Método de pago</h2>
-    <form>
-      {% csrf_token %}
-      {{ pago_form.as_div }}
-    </form>
-    <span>Monto: {{ total_carrito }}</span>
-  </section>
-  <button id="btn-pagar">Pagar</button>
+      <span>Monto: {{ total_carrito }}</span>
+    </section>
+    <button class="btn btn-success mt-4" id="btn-pagar">Pagar</button>
+  </div>
 {% endblock %}
 
 {% block scripts %}
