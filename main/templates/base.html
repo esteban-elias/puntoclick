@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,48 +10,43 @@
 <body>
   <div class="container">
     <header>
-      <div class="dropdown pt-3">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         Menú
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <nav>
-            <ul>
-              <li>Categorías
-                <ul>
-                {% for padre in categorias_padre %}
-                  <li>
-                  {{ padre.nombre }}
-                  {% if padre.categoria_set.all %}
-                    <ul>
-                    {% for hijo in padre.categoria_set.all %}
-                      <li>
-                        <a href="{% url 'categoria' hijo.id %}">
-                          {{ hijo.nombre }}
-                        </a>
-                      </li>
-                    {% endfor %}
-                    </ul>
-                  {% endif %}
-                  </li>
-                {% endfor %}
-                </ul>
-              </li>
-              <li><a href="{% url 'carrito' %}">Carrito</a></li>
-              </li>
-            <li>
+      <div class="d-flex flex-row gap-3">
+        <div>
+          <div class="dropdown pt-3">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Menú
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Categorías</a>
+              <div class="dropdown-divider"></div>
+              {% for padre in categorias_padre %}
+                <a class="dropdown-item">{{ padre.nombre }}</a>
+                {% if padre.categoria_set.all %}
+                  {% for hijo in padre.categoria_set.all %}
+                    <a class="dropdown-item" href="{% url 'categoria' hijo.id %}">- {{ hijo.nombre }}</a>
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'carrito' %}">Carrito</a>
+              <div class="dropdown-divider"></div>
               {% if user.is_authenticated %}
-                <a href="{% url 'cuenta' %}">{{ user.username }}</a> /
-                <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+                <a class="dropdown-item" href="{% url 'cuenta' %}">{{ user.username }}</a>
+                <a class="dropdown-item" href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
               {% else %}
-                <a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
+                <a class="dropdown-item" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
               {% endif %}
-            </li>
-            </ul>
-          </nav>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3">
+          <a href="{% url 'index' %}" class="d-flex justify-content-end align-items-end">
+            <img class="w-25" src="{% static 'main/img/logo.png' %}" alt="logo puntoclick">
+          </a>
         </div>
       </div>
     </header>
+    
     <main>
       {% block content %}{% endblock %}
     </main>
