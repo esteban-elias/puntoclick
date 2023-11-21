@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then((response) => {
         console.log(response);
         if (response.data.status === 'success') {
-          form.innerHTML = `<li>Producto añadido al carrito</li>`;
+          form.innerHTML = `<li class="list-group-item">Producto añadido al carrito</li>`;
         }
       })
       .catch((error) => {

@@ -4,36 +4,37 @@
 {% block title %}{{ producto.titulo }}{% endblock %}
 
 {% block content %}
-  <h1>{{ producto.titulo }}</h1>
-  <section>
-    <h2>Detalles</h2>
-    <ul>
-      <li>Descripción: {{ producto.descripcion }}</li>
-      <li>Precio: {{ producto.precio }}</li>
-      <li>Vendedor: {{ producto.vendedor }}</li>
-      <li>Stock: {{ producto.cantidad_stock }}</li>
+  <div class="d-flex flex-column min-vh-100">
 
-      {% if producto.id in ids_productos_carrito %}
-      <li>Producto añadido al carrito.</li>
-      {% else %}
-        <li>
-          <form action="{% url 'agregar_al_carrito' producto.id %}">
-            {% csrf_token %}
-            <button 
-              type="button"
-              id="btn-agregar-al-carrito">
-                Agregar al carrito
-            </button>
-          </form>
-        </li>
-      {% endif %}
-      <li> 
-      {% for imagen in imagenes %}
-        <img src="{{ imagen.url_imagen }}" alt="{{ producto.titulo }}">
-      {% endfor %}
-      </li>
-    </ul>
-  </section>
+    <h1 class="mt-5">{{ producto.titulo }}</h1>
+        {% for imagen in imagenes %}
+          <img class="w-50 my-5" src="{{ imagen.url_imagen }}" alt="{{ producto.titulo }}">
+        {% endfor %}
+    <section>
+      <h2>Detalles</h2>
+      <ul class="list-group mt-4">
+        <li class="list-group-item">Descripción: {{ producto.descripcion }}</li>
+        <li class="list-group-item">Precio: {{ producto.precio }}</li>
+        <li class="list-group-item">Vendedor: {{ producto.vendedor }}</li>
+        <li class="list-group-item">Stock: {{ producto.cantidad_stock }}</li>
+        {% if producto.id in ids_productos_carrito %}
+        <li class="list-group-item">Producto añadido al carrito.</li>
+        {% else %}
+          <li class="list-group-item">
+            <form action="{% url 'agregar_al_carrito' producto.id %}">
+              {% csrf_token %}
+              <button
+                class="btn btn-primary"
+                type="button"
+                id="btn-agregar-al-carrito">
+                  Agregar al carrito
+              </button>
+            </form>
+          </li>
+        {% endif %}
+      </ul>
+    </section>
+  </div>
 {% endblock %}
 
 {% block scripts %}
