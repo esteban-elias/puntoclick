@@ -6,21 +6,51 @@ document.addEventListener('DOMContentLoaded', function () {
   const pais = document.getElementById('id_pais');
   const metodo_pago = document.getElementById('id_metodo_pago');
   const btnPagar = document.getElementById('btn-pagar');
+  const btnDescuento = document.getElementById('btn-descuento');
+  const spanMonto = document.getElementById('span-monto');
+  const montoSinDescuento = spanMonto.textContent;
+
+  const dataPagoForm = new URLSearchParams();
+
+  btnDescuento.addEventListener('click', function () {
+    const data = new URLSearchParams();
+    form = btnDescuento.closest('form');
+    const url = form.action;
+
+    data.append(
+      'codigo',
+      document.getElementById('codigo_descuento').value
+    );
+    axios
+      .post(url, data)
+      .then((response) => {
+        console.log(response);
+        if (response.data.status === 'success') {
+          alert('Descuento aplicado')
+          spanMonto.textContent = (1 - response.data.descuento) * montoSinDescuento;
+          dataPagoForm.append('descuento', response.data.descuento);
+        } else {
+          alert('Código inválido');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
 
   btnPagar.addEventListener('click', function () {
     if (!validarCampos()) {
       return;
     }
-    const data = new URLSearchParams();
-    data.append('direccion-direccion_calle', direccion_calle.value);
-    data.append('direccion-ciudad', ciudad.value);
-    data.append('direccion-estado', estado.value);
-    data.append('direccion-codigo_postal', codigo_postal.value);
-    data.append('direccion-pais', pais.value);
-    data.append('pago-metodo_pago', metodo_pago.value);
+    dataPagoForm.append('direccion-direccion_calle', direccion_calle.value);
+    dataPagoForm.append('direccion-ciudad', ciudad.value);
+    dataPagoForm.append('direccion-estado', estado.value);
+    dataPagoForm.append('direccion-codigo_postal', codigo_postal.value);
+    dataPagoForm.append('direccion-pais', pais.value);
+    dataPagoForm.append('pago-metodo_pago', metodo_pago.value);
 
     axios
-      .post(window.location.href, data)
+      .post(window.location.href, dataPagoForm)
       .then((response) => {
         console.log(response);
         if (response.data.status === 'success') {

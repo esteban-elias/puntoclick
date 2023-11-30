@@ -36,7 +36,22 @@
         {% csrf_token %}
         {{ pago_form.as_div }}
       </form>
-      <span>Monto: {{ total_carrito }}</span>
+      <div>Monto: <span id="span-monto">{{ total_carrito }}</span></div>
+    </section>
+    <section>
+      <h2 class="mt-4 mb-3">Código de descuento</h2>
+      <form class="mb-4" action="{% url 'validar_descuento' %}">
+        {% csrf_token %}
+        <label>Ingresa tu código de descuento
+          <input class="mt-2" type="text" id="codigo_descuento" name="codigo_descuento">
+        </label>
+        <button
+          class="btn- btn-primary mt-1"
+          id="btn-descuento"
+          type="button">
+          Validar
+        </button>
+      </form>
     </section>
     <button class="btn btn-success mt-4" id="btn-pagar">Pagar</button>
   </div>

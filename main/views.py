@@ -1,3 +1,4 @@
+from datetime import date
 from copy import deepcopy
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseForbidden
@@ -184,6 +185,9 @@ def pagar(request):
         carrito = request.session.get('carrito', {})
         monto = sum([item['precio'] * item['cantidad']
                     for item in carrito.values()])
+        descuento = request.POST['descuento']
+        if descuento:
+            monto = monto - (monto * float(descuento))
         formDireccion = DireccionForm(request.POST, prefix='direccion')
         formPago = PagoForm(request.POST, prefix='pago')
         if formDireccion.is_valid() and formPago.is_valid():
@@ -223,3 +227,17 @@ def boleta(request, id_pago):
         'pago': pago
     }
     return render(request, 'boleta.html', context)
+
+
+@require_POST
+def validar_descuento(request):
+    codigo = request.POST['codigo']
+    fecha_hoy = date.today().strftime('%Y-%m-%d')
+    if codigo == fecha_hoy:
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Código de descuento válido',
+            'descuento': 0.2
+        })
+    else:
+        return HttpResponseBadRequest('Código de descuento inválido')
