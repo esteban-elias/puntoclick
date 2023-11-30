@@ -7,21 +7,20 @@
     <div class="d-flex flex-column min-vh-100">
       <div id="carouselExampleControls" class="carousel slide py-5" data-ride="carousel">
         <div class="carousel-inner">
-          <div class="carousel-item active">
-            <a href="{% url 'categoria' 4 %}">
-              <img class="d-block w-100" src="{% static 'main/img/carousel-almacenamiento.png' %}" alt="First slide">
-            </a>
-          </div>
-          <div class="carousel-item">
-            <a href="{% url 'categoria' 10 %}">
-              <img class="d-block w-100" src="{% static 'main/img/carousel-consolas.png' %}" alt="First slide">
-            </a>
-          </div>
-          <div class="carousel-item">
-            <a href="{% url 'categoria' 11 %}">
-              <img class="d-block w-100" src="{% static 'main/img/carousel-videojuegos.png' %}" alt="Third slide">
-            </a>
-          </div>
+          {% for categoria in categorias %}
+          {% if forloop.first %}
+            <div class="carousel-item active">
+          {% else %}
+            <div class="carousel-item">
+          {% endif %}
+              <a href="{% url 'categoria' categoria.id %}">
+                <img
+                  class="d-block w-100"
+                  src="{% static 'main/img/carousel-'|add:categoria.nombre|lower|add:'.png' %}"
+                  alt="{{ categoria.nombre }}">
+              </a>
+            </div>
+        {% endfor %}
         </div>
         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
