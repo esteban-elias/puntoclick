@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 
 {% block title %}Boleta{% endblock %}
 
@@ -10,7 +11,7 @@
       <ul class="list-group">
         <li class="list-group-item">Método de pago: {{ pago.metodo_pago }}</li>
         <li class="list-group-item">Fecha: {{ pago.fecha_pago }}</li>
-        <li class="list-group-item">Monto: {{ pago.monto }}</li>
+        <li class="list-group-item">Monto: {{ pago.monto|pesos_chilenos }}</li>
       </ul>
     </section>
   </div>

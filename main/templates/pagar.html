@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Pagar{% endblock %}
 
@@ -36,7 +37,11 @@
         {% csrf_token %}
         {{ pago_form.as_div }}
       </form>
-      <div>Monto: <span id="span-monto">{{ total_carrito }}</span></div>
+      <div>Monto: 
+        <span id="span-monto" data-monto="{{ total_carrito }}">
+          {{ total_carrito|pesos_chilenos }}
+        </span>
+      </div>
     </section>
     <section>
       <h2 class="mt-4 mb-3">Código de descuento</h2>

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Carrito{% endblock %}
 
@@ -21,7 +22,7 @@
         <tfoot>
           <tr>
             <td colspan="3">Total a pagar</td>
-            <td id="total-carrito">{{ total_carrito }}</td>
+            <td id="total-carrito">{{ total_carrito|pesos_chilenos }}</td>
             <td>
               <button class="btn btn-success" type="submit">
                 <a href="{% url 'pagar' %}" style="color: inherit; text-decoration: none;">Pagar</a>
@@ -38,8 +39,8 @@
               </a>
             </td>
             <td id="cantidad-{{item.id_producto}}">{{ item.cantidad }}</td>
-            <td>{{ item.precio }}</td>
-            <td id="total-{{item.id_producto}}">{{ item.precio_total }}</td>
+            <td>{{ item.precio|pesos_chilenos }}</td>
+            <td id="total-{{item.id_producto}}">{{ item.precio_total|pesos_chilenos }}</td>
             <td>
               <form action="{% url 'incrementar_item_carrito' item.id_producto %}">
                 {% csrf_token %}

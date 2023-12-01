@@ -240,4 +240,7 @@ def validar_descuento(request):
             'descuento': 0.2
         })
     else:
-        return HttpResponseBadRequest('Código de descuento inválido')
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Código de descuento inválido'
+        })

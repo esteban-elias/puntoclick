@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
             ).innerHTML = item.cantidad;
             document.getElementById(
               `total-${item.id_producto}`
-            ).innerHTML = item.cantidad * item.precio;
+            ).innerHTML = toCLP(item.cantidad * item.precio);
             document.getElementById('total-carrito').innerHTML =
-              response.data.total_carrito;
+              toCLP(response.data.total_carrito);
           }
         })
         .catch((error) => {
@@ -46,9 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
             ).innerHTML = item.cantidad;
             document.getElementById(
               `total-${item.id_producto}`
-            ).innerHTML = item.cantidad * item.precio;
+            ).innerHTML = toCLP(item.cantidad * item.precio);
             document.getElementById('total-carrito').innerHTML =
-              response.data.total_carrito;
+              toCLP(response.data.total_carrito);
           }
         })
         .catch((error) => {
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
               .getElementById(`item-${item.id_producto}`)
               .remove();
             document.getElementById('total-carrito').innerHTML =
-              response.data.total_carrito;
+              toCLP(response.data.total_carrito);
           }
         })
         .catch((error) => {
@@ -80,4 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
   });
+
+  function toCLP(value) {
+    return Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: 'CLP',
+    }).format(value);
+  }
 });

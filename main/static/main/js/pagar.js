@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnPagar = document.getElementById('btn-pagar');
   const btnDescuento = document.getElementById('btn-descuento');
   const spanMonto = document.getElementById('span-monto');
-  const montoSinDescuento = spanMonto.textContent;
+  const montoSinDescuento = spanMonto.dataset.monto;
 
   const dataPagoForm = new URLSearchParams();
 
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(response);
         if (response.data.status === 'success') {
           alert('Descuento aplicado')
-          spanMonto.textContent = (1 - response.data.descuento) * montoSinDescuento;
+          spanMonto.textContent = toCLP((1 - response.data.descuento) * montoSinDescuento);
           dataPagoForm.append('descuento', response.data.descuento);
         } else {
           alert('Código inválido');
@@ -88,5 +88,12 @@ document.addEventListener('DOMContentLoaded', function () {
       return false;
     }
     return true;
+  }
+  
+  function toCLP(value) {
+    return new Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: 'CLP',
+    }).format(value);
   }
 });

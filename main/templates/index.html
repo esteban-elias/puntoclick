@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Inicio{% endblock %}
 
@@ -39,7 +40,7 @@
           <div class="border rounded my-3 py-3 d-flex flex-column justify-content-center align-items-center">
             <div>{{ producto.titulo }}</div>
             <div>{{ producto.vendedor }}</div>
-            <div>{{ producto.precio }}</div>
+            <div>{{ producto.precio|pesos_chilenos }}</div>
             {% for imagen in producto.imagenproducto_set.all %}
             <div class="d-flex flex-column justify-content-center align-items-center">
               <img class="w-50" src="{{ imagen.url_imagen }}" alt="{{ imagen.producto }}">

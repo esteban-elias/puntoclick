@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}{{ producto.titulo }}{% endblock %}
 
@@ -15,7 +16,7 @@
       <h2>Detalles</h2>
       <ul class="list-group mt-4">
         <li class="list-group-item">Descripción: {{ producto.descripcion }}</li>
-        <li class="list-group-item">Precio: {{ producto.precio }}</li>
+        <li class="list-group-item">Precio: {{ producto.precio|pesos_chilenos }}</li>
         <li class="list-group-item">Vendedor: {{ producto.vendedor }}</li>
         <li class="list-group-item">Stock: {{ producto.cantidad_stock }}</li>
         {% if producto.id in ids_productos_carrito %}
