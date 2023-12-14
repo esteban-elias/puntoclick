@@ -5,12 +5,19 @@
 {% block title %}{{ producto.titulo }}{% endblock %}
 
 {% block content %}
+  <style>
+    .img-producto {
+      height: 250px;
+      width: 250px;
+      object-fit: cover;
+    }
+  </style>
 
   <div class="d-flex flex-column min-vh-100">
 
     <h1 class="mt-5">{{ producto.titulo }}</h1>
         {% for imagen in imagenes %}
-          <img class="w-50 my-5" src="{{ imagen.url_imagen }}" alt="{{ producto.titulo }}">
+          <img class="rounded my-5" src="{{ imagen.url_imagen }}" alt="{{ producto.titulo }}">
         {% endfor %}
     <section>
       <h2>Detalles</h2>

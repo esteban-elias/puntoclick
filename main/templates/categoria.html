@@ -5,6 +5,13 @@
 {% block title %}{{ categoria.nombre }}{% endblock %}
 
 {% block content %}
+  <style>
+    .img-producto {
+      height: 250px;
+      width: 250px;
+      object-fit: cover;
+    }
+  </style>
   <div class="d-flex flex-column min-vh-100">
     <div class="border my-5">
     {% if categoria.nombre == "Almacenamiento" %}
@@ -26,10 +33,10 @@
           <div>{{ producto.precio|pesos_chilenos }}</div>
           {% for imagen in producto.imagenproducto_set.all %}
           <div class="d-flex flex-column justify-content-center align-items-center">
-            <img class="w-50 my-3" src="{{ imagen.url_imagen }}" alt="{{ imagen.producto }}">
+            <img class="img-producto mt-3 rounded" src="{{ imagen.url_imagen }}" alt="{{ imagen.producto }}">
           </div>
           <div>
-            <a href="{% url 'producto' producto.id %}" class="btn btn-primary" role="button">Ver producto</a>
+            <a href="{% url 'producto' producto.id %}" class="btn btn-primary mt-3" role="button">Ver producto</a>
           </div>
           {% endfor %}
         </div>

@@ -5,6 +5,9 @@
 {% block title %}Carrito{% endblock %}
 
 {% block content %}
+  <style>
+    
+  </style>
   <div class="d-flex flex-column min-vh-100">
     <h1 class="mt-5">Carrito</h1>
     <section>
@@ -44,15 +47,15 @@
             <td>
               <form action="{% url 'incrementar_item_carrito' item.id_producto %}">
                 {% csrf_token %}
-                <button class="btn btn-primary btn-incrementar" type="button">+</button>
+                <button class="btn btn-primary btn-incrementar w-75" type="button">+</button>
               </form>
               <form action="{% url 'decrementar_item_carrito' item.id_producto %}">
                 {% csrf_token %}
-                <button class="btn btn-secondary btn-decrementar" type="button">-</button>
+                <button class="btn btn-secondary btn-decrementar mt-2 w-75" type="button">-</button>
               </form>
               <form action="{% url 'eliminar_item_carrito' item.id_producto %}">
                 {% csrf_token %}
-                <button class="btn btn-danger btn-eliminar" type="button">Eliminar</button>
+                <button class="btn btn-danger btn-eliminar mt-2 w-75" type="button">🗑️</button>
               </form>
             </td>
           </tr>

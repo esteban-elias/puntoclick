@@ -5,6 +5,17 @@
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
+  <style>
+    .img-producto {
+      height: 250px;
+      width: 250px;
+      object-fit: cover;
+    }
+    .carousel-inner {
+    border-radius: 10px;
+    overflow: hidden;
+}
+  </style>
     <div class="d-flex flex-column min-vh-100">
       <div id="carouselExampleControls" class="carousel slide py-5" data-ride="carousel">
         <div class="carousel-inner">
@@ -39,14 +50,14 @@
         {% for producto in productos %}
           <div class="border rounded my-3 py-3 d-flex flex-column justify-content-center align-items-center">
             <div>{{ producto.titulo }}</div>
-            <div>{{ producto.vendedor }}</div>
+            <div>Vendedor: {{ producto.vendedor }}</div>
             <div>{{ producto.precio|pesos_chilenos }}</div>
             {% for imagen in producto.imagenproducto_set.all %}
             <div class="d-flex flex-column justify-content-center align-items-center">
-              <img class="w-50" src="{{ imagen.url_imagen }}" alt="{{ imagen.producto }}">
+              <img class="img-producto mt-3 rounded" src="{{ imagen.url_imagen }}" alt="{{ imagen.producto }}">
             </div>
             <div>
-              <a href="{% url 'producto' producto.id %}" class="btn btn-primary" role="button">Ver producto</a>
+              <a href="{% url 'producto' producto.id %}" class="btn btn-primary mt-3" role="button">Ver producto</a>
             </div>
             {% endfor %}
           </div>
